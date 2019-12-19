@@ -8,13 +8,19 @@ const burger = (props) => {
     // So we can then figure out the content of the burger,
     // And display it dynamically using Array.map()
 
-    const transformedIngredients = Object.keys(props.ingredients)
+    let transformedIngredients = Object.keys(props.ingredients)
     // ingKey = ingredientKey
     .map(ingKey => {
         return [...Array(props.ingredients[ingKey])].map((_, i) => {
             return <BurgerIngredient key={ingKey + i} type={ingKey} />
         });
-    });
+    })
+    .reduce((arr, el) => {
+        return arr.concat(el)
+    }, []);
+    if(transformedIngredients.length === 0) {
+        transformedIngredients = <p>Please start adding ingredients</p>
+    }
     return (
         <div className={styles.Burger}>
             {/*
